@@ -1,0 +1,9 @@
+<odoo>
+    <data noupdate="1">
+        <record id="group_test_applicant_manager" model="res.groups">
+            <field name="name">Test Applicant Manager</field>
+            <field name="category_id" ref="base.module_category_administration"/>
+            <field name="users" eval="[(6, 0, [])]"/> <!-- Empty list means no user is assigned automatically -->
+        </record>
+    </data>
+</odoo>

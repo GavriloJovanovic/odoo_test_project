@@ -1,35 +1,17 @@
-# -*- coding: utf-8 -*-
 {
-    'name': "../custom_addons/test_applicant",
-
-    'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
-
-    'description': """
-        Long description of module's purpose
-    """,
-
-    'author': "My Company",
-    'website': "https://www.yourcompany.com",
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/16.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'Uncategorized',
-    'version': '0.1',
-
-    # any module necessary for this one to work correctly
+    'name': 'Test Applicant',
+    'version': '1.0',
+    'summary': 'Test module for managing applicants',
+    'category': 'Custom',
+    'author': 'Gavrilo Jovanovic',
+    'license': 'LGPL-3',  # ✅ Add license to avoid warnings
     'depends': ['base'],
-
-    # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
+        'security/security.xml',  # ✅ Load security AFTER views/menus
+        'views/test_model_menu.xml',   # ✅ Load menu first
+        'views/test_model_views.xml',  # ✅ Load views after menus
+        'security/ir.model.access.csv', # ✅ Load access rules last
     ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
+    'installable': True,
+    'application': True,
 }

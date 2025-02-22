@@ -1,0 +1,24 @@
+<!-- test_model_menu.xml -->
+<odoo>
+    <data>
+        <!-- Parent Menu under Settings -->
+        <menuitem id="menu_test_applicant_root"
+                  name="Test Applicant"
+                  parent="base.menu_management"
+                  sequence="10"
+                  groups="test_applicant.group_test_applicant_manager"/>
+
+        <!-- Action for Test Applicants -->
+        <record id="action_test_model" model="ir.actions.act_window">
+            <field name="name">Test Applicants</field>
+            <field name="res_model">test.model</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Submenu that links to the action -->
+        <menuitem id="menu_test_applicant_main"
+                  name="Test Applicants"
+                  parent="menu_test_applicant_root"
+                  action="action_test_model"/>
+    </data>
+</odoo>
