@@ -13,7 +13,6 @@ class TestModelAPI(http.Controller):
         records = request.env['test.model'].sudo().search([])
         data = [{'id': rec.id, 'name': rec.name, 'reference_code': rec.reference_code, 'state': rec.state} for rec in records]
 
-        # ✅ Fix: Return a JSON response properly
         return data  # No need to use json.dumps()
 
     @http.route('/api/test_model', type='json', auth='user', methods=['POST'], csrf=False)
