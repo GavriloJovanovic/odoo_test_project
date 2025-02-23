@@ -1,0 +1,25 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Cron Job to Auto Mark Confirmed Records as Done -->
+        <record id="cron_auto_mark_done" model="ir.cron">
+            <field name="name">Auto Mark as Done</field>
+            <field name="model_id" ref="model_test_model"/>
+            <field name="state">code</field>
+            <field name="code">model._auto_mark_done()</field>
+            <field name="interval_number">5</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <!-- Cron Job to Reset Reference Code Daily -->
+        <record id="cron_reset_reference_code" model="ir.cron">
+            <field name="name">Reset Reference Code Daily</field>
+            <field name="model_id" ref="model_test_model"/>
+            <field name="state">code</field>
+            <field name="code">model._reset_reference_code()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+    </data>
+</odoo>

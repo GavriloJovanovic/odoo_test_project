@@ -1,0 +1,11 @@
+<odoo>
+    <data noupdate="1">
+        <record id="seq_test_model_reference" model="ir.sequence">
+            <field name="name">Test Model Reference Code</field>
+            <field name="code">test.model.reference_code</field>
+            <field name="prefix">TEST-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+        </record>
+    </data>
+</odoo>
