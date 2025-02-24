@@ -3,6 +3,7 @@ from odoo import http
 from odoo.http import request
 # custom_addons/test_applicant/controllers/test_model_api.py
 
+
 class TestModelAPI(http.Controller):
 
     @http.route('/api/test_model', type='json', auth='public', methods=['GET'])
@@ -17,22 +18,26 @@ class TestModelAPI(http.Controller):
 
     @http.route('/api/test_model', type='json', auth='user', methods=['POST'], csrf=False)
     def create_test_model(self, **kwargs):
-        """Creates a new test.model record (Requires Authentication)."""
-        data = request.jsonrequest  # Get JSON data from request
-        required_fields = ['name', 'description']
+        """Creates a new record (requires authentication)."""
 
-        # Validate required fields
-        for field in required_fields:
-            if field not in data:
-                return {'error': f'Missing required field: {field}'}
+        # Debug authentication
+        print("Session UID:", request.session.uid)
+        print("User ID:", request.env.user.id)
+        print("User Name:", request.env.user.name)
+        print("Is Superuser:", request.env.user._is_superuser())
 
-        try:
-            new_record = request.env['test.model'].sudo().create({
-                'name': data['name'],
-                'description': data.get('description', ''),
-                'state': 'draft'
-            })
-            return {'success': True, 'id': new_record.id, 'reference_code': new_record.reference_code}
-        except Exception as e:
-            return {'error': str(e)}
+        if not request.session.uid:
+            return {"error": "User not authenticated"}
+
+        if 'name' not in kwargs:
+            return {'error': 'Missing required field: name'}
+
+        new_record = request.env['test.model'].sudo().create({'name': kwargs['name']})
+
+        return {
+            'id': new_record.id,
+            'reference_code': new_record.reference_code,
+            'state': new_record.state
+        }
+
 
