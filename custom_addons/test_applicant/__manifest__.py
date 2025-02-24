@@ -11,6 +11,7 @@
         'security/security.xml',
         'views/test_model_menu.xml',
         'views/test_model_views.xml',
+        'views/res_users_views.xml',
         'security/ir.model.access.csv',
         'data/sequence.xml',
         'data/cron.xml',
