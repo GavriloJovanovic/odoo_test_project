@@ -24,8 +24,17 @@ class TestModel(models.Model):
 
     @api.model
     def create(self, vals):
-        """ Override create method to generate reference_code """
-        vals['reference_code'] = self.env['ir.sequence'].next_by_code('test.model.reference_code')
+        """ Generate a unique reference_code based on the highest existing one. """
+        last_record = self.search([], order='reference_code desc', limit=1)
+
+        if last_record and last_record.reference_code:
+            last_number = int(last_record.reference_code.split('-')[-1])  # Extract last number
+        else:
+            last_number = 0
+
+        new_reference_code = f"TEST-{str(last_number + 1).zfill(4)}"
+        vals['reference_code'] = new_reference_code
+
         return super(TestModel, self).create(vals)
 
     def action_confirm(self):
@@ -41,11 +50,20 @@ class TestModel(models.Model):
 
     @api.model
     def _reset_reference_code(self):
-        """ Resets the reference_code sequence daily and updates all records """
-        sequence = self.env['ir.sequence'].search([('code', '=', 'test.model.reference_code')])
+        """ Reset reference_code sequence daily while maintaining uniqueness. """
+        sequence = self.env['ir.sequence'].search([('code', '=', 'test.model.reference_code')], limit=1)
         if sequence:
-            sequence.sudo().write({'number_next': 1})  # Reset sequence to start from 1
+            sequence.sudo().write({'number_next': 1})  # Reset sequence
 
-        for index, record in enumerate(self.search([]), start=1):
+        # Get all records sorted by ID and reassign unique reference codes
+        records = self.search([], order="id asc")
+
+        for index, record in enumerate(records, start=1):
             new_code = f"TEST-{str(index).zfill(4)}"
+
+            # Ensure uniqueness
+            if self.search([('reference_code', '=', new_code)], limit=1):
+                continue  # Skip if the reference code already exists
+
             record.sudo().write({'reference_code': new_code})
+
