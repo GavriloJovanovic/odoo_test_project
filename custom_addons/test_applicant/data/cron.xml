@@ -1,5 +1,5 @@
 <odoo>
-    <data noupdate="1">
+    <data>
         <!-- Cron Job to Auto Mark Confirmed Records as Done -->
         <record id="cron_auto_mark_done" model="ir.cron">
             <field name="name">Auto Mark as Done</field>
