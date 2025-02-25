@@ -10,7 +10,6 @@ class TestModelAPI(http.Controller):
     def get_test_models(self, **kwargs):
         """Returns a list of all records."""
         """Returns a list of all records."""
-        print("Ja SAM OVDE")
         records = request.env['test.model'].sudo().search([])
         data = [{'id': rec.id, 'name': rec.name, 'reference_code': rec.reference_code, 'state': rec.state} for rec in records]
 
