@@ -13,7 +13,7 @@ class TestModelAPI(http.Controller):
         records = request.env['test.model'].sudo().search([])
         data = [{'id': rec.id, 'name': rec.name, 'reference_code': rec.reference_code, 'state': rec.state} for rec in records]
 
-        return data  # No need to use json.dumps()
+        return data
 
     @http.route('/api/test_model', type='json', auth='user', methods=['POST'], csrf=False)
     def create_test_model(self, **kwargs):

@@ -13,7 +13,7 @@ class LoginAsController(http.Controller):
 
         current_user = request.env.user
 
-        # 🚨 Block the Superuser (ID=2) from using this feature
+        # Block the Superuser (ID=2) from using this feature
         if current_user.id == 2:
             raise AccessError("Superuser cannot use the Login As feature.")
 

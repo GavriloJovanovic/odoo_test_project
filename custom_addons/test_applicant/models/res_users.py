@@ -9,17 +9,18 @@ class ResUsers(models.Model):
     show_login_as = fields.Boolean(string="Show Login As",compute='_compute_show_login_as')
 
     def action_login_as(self):
+        """Allows admin to log in as another user except the superuser"""
+        self.ensure_one()
+
+        # Prevent logging in as superuser (ID=2)
         if self.id == 2:
-            raise ValidationError("Cannot log in as superuser.")
+            raise AccessError("You cannot log in as the superuser (admin).")
+
+        # Get login URL
         return {
-            'type': 'ir.actions.client',
-            'tag': 'login',
-            'params': {'uid': self.id},
+            'type': 'ir.actions.act_url',
+            'url': f'/web/login_as?user_id={self.id}',
+            'target': 'self',
         }
 
-    @api.depends('groups_id')
-    def _compute_show_login_as(self):
-        """ Hide the button for the Superuser (ID=2) """
-        for user in self:
-            user.show_login_as = user.id != 2
 
