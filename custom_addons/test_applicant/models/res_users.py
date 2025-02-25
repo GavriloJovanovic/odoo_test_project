@@ -6,8 +6,6 @@ from odoo import api
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
-    show_login_as = fields.Boolean(string="Show Login As",compute='_compute_show_login_as')
-
     def action_login_as(self):
         """Allows admin to log in as another user except the superuser"""
         self.ensure_one()
