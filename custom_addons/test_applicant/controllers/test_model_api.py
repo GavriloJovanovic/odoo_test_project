@@ -1,6 +1,7 @@
 import json
 from odoo import http
 from odoo.http import request
+from odoo.exceptions import ValidationError
 # custom_addons/test_applicant/controllers/test_model_api.py
 
 
@@ -26,10 +27,10 @@ class TestModelAPI(http.Controller):
         print("Is Superuser:", request.env.user._is_superuser())
 
         if not request.session.uid:
-            return {"error": "User not authenticated"}
+            raise ValidationError("User not authenticated")
 
         if 'name' not in kwargs:
-            return {'error': 'Missing required field: name'}
+            raise ValidationError("Missing required field: name")
 
         new_record = request.env['test.model'].sudo().create({'name': kwargs['name']})
 
