@@ -73,7 +73,7 @@ Clone the `odoo 16` from repo:
 
 ```
 git clone https://github.com/odoo/odoo.git --branch 16.0 --depth 1
-git cd odoo
+cd odoo
 ```
 
 Create and activate a virtual environment:
@@ -116,7 +116,7 @@ python odoo-bin --config=../odoo.conf
 To update your custom module:
 
 ```
-python odoo-bin --config=odoo.conf -u test_applicant --stop-after-init
+python odoo-bin --config=../odoo.conf -u test_applicant --stop-after-init
 ```
 
 ------
